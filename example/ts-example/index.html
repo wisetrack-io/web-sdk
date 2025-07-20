@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+   <head>
+      <meta charset="UTF-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <title>WiseTrack</title>
+      <link rel="stylesheet" href="style/app.css" />
+   </head>
+   <body>
+      <div class="container">
+      <div class="header-section">
+         <div class="title">
+            <img src="images/wisetrack.png" alt="logo" class="logo" />
+            <h3 id="appbar-title">WiseTrack WebApp (TS)</h3>
+         </div>
+         <div class="actions">
+            <a href="#">
+               <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  >
+                  <g fill="none">
+                     <path
+                        d="m12.593 23.258l-.011.002l-.071.035l-.02.004l-.014-.004l-.071-.035q-.016-.005-.024.005l-.004.01l-.017.428l.005.02l.01.013l.104.074l.015.004l.012-.004l.104-.074l.012-.016l.004-.017l-.017-.427q-.004-.016-.017-.018m.265-.113l-.013.002l-.185.093l-.01.01l-.003.011l.018.43l.005.012l.008.007l.201.093q.019.005.029-.008l.004-.014l-.034-.614q-.005-.018-.02-.022m-.715.002a.02.02 0 0 0-.027.006l-.006.014l-.034.614q.001.018.017.024l.015-.002l.201-.093l.01-.008l.004-.011l.017-.43l-.003-.012l-.01-.01z"
+                        />
+                     <path
+                        fill="currentColor"
+                        d="M4.5 17.5a1.5 1.5 0 1 1 0 3a1.5 1.5 0 0 1 0-3M20 18a1 1 0 1 1 0 2H9a1 1 0 1 1 0-2zM4.5 10.5a1.5 1.5 0 1 1 0 3a1.5 1.5 0 0 1 0-3M20 11a1 1 0 0 1 .117 1.993L20 13H9a1 1 0 0 1-.117-1.993L9 11zM4.5 3.5a1.5 1.5 0 1 1 0 3a1.5 1.5 0 0 1 0-3M20 4a1 1 0 0 1 .117 1.993L20 6H9a1 1 0 0 1-.117-1.993L9 4z"
+                        />
+                  </g>
+               </svg>
+            </a>
+            <a href="#" id="reset-sdk">
+               <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  >
+                  <path
+                     fill="currentColor"
+                     d="M3.68 11.333h-.75zm0 1.667l-.528.532a.75.75 0 0 0 1.056 0zm2.208-1.134A.75.75 0 1 0 4.83 10.8zM2.528 10.8a.75.75 0 0 0-1.056 1.065zm16.088-3.408a.75.75 0 1 0 1.277-.786zM12.079 2.25c-5.047 0-9.15 4.061-9.15 9.083h1.5c0-4.182 3.42-7.583 7.65-7.583zm-9.15 9.083V13h1.5v-1.667zm1.28 2.2l1.679-1.667L4.83 10.8l-1.68 1.667zm0-1.065L2.528 10.8l-1.057 1.065l1.68 1.666zm15.684-5.86A9.16 9.16 0 0 0 12.08 2.25v1.5a7.66 7.66 0 0 1 6.537 3.643zM20.314 11l.527-.533a.75.75 0 0 0-1.054 0zM18.1 12.133a.75.75 0 0 0 1.055 1.067zm3.373 1.067a.75.75 0 1 0 1.054-1.067zM5.318 16.606a.75.75 0 1 0-1.277.788zm6.565 5.144c5.062 0 9.18-4.058 9.18-9.083h-1.5c0 4.18-3.43 7.583-7.68 7.583zm9.18-9.083V11h-1.5v1.667zm-1.276-2.2L18.1 12.133l1.055 1.067l1.686-1.667zm0 1.066l1.686 1.667l1.054-1.067l-1.686-1.666zM4.04 17.393a9.2 9.2 0 0 0 7.842 4.357v-1.5a7.7 7.7 0 0 1-6.565-3.644z"
+                     />
+               </svg>
+            </a>
+         </div>
+      </div>
+      <form class="form-data" id="main-form">
+         <div class="form-row">
+            <div class="form-item">
+               <label for="log-level">🐞 Log Level</label><br />
+               <select name="log_level" id="log-level">
+                  <option value="debug" selected>DEBUG</option>
+                  <option value="info">INFO</option>
+                  <option value="warning">WARNING</option>
+                  <option value="error">ERROR</option>
+               </select>
+            </div>
+            <div class="form-item">
+               <label for="app-token">🔑 App Token</label><br />
+               <input
+                  name="app_token"
+                  id="app-token"
+                  type="text"
+                  value="rMN5ZCwpOzY7"
+                  placeholder="App Token"
+                  />
+            </div>
+         </div>
+         <div class="form-row">
+            <div class="form-item">
+               <button
+                  id="default-event"
+                  type="submit"
+                  name="action"
+                  value="default-event"
+                  class="secondary-btn"
+                  >
+               ⚡️ Default Event
+               </button>
+            </div>
+            <div class="form-item">
+               <button
+                  id="revenue-event"
+                  type="submit"
+                  name="action"
+                  value="revenue-event"
+                  class="secondary-btn"
+                  >
+               💵 Revenue Event
+               </button>
+            </div>
+            <div class="form-item">
+               <button
+                  id="fcm-token"
+                  type="submit"
+                  name="action"
+                  value="fcm-token"
+                  class="secondary-btn"
+                  >
+               🔈 Set FCM Token
+               </button>
+            </div>
+         </div>
+         <div class="event-form">
+            <div class="form-row">
+               <div class="form-item">
+                  <label for="event-name">🍄 Event Name</label><br />
+                  <input
+                     name="event_name"
+                     id="event-name"
+                     type="text"
+                     placeholder="Event Name"
+                     />
+               </div>
+               <div class="form-item">
+                  <label for="event-type">🍄 Event Type</label><br />
+                  <select name="event_type" id="event-type">
+                     <option value="default" selected>Default</option>
+                     <option value="revenue">Revenue</option>
+                  </select>
+               </div>
+            </div>
+            <div class="form-row">
+               <div class="form-item">
+                  <label for="event-params">🔑 Params Key/Value</label><br />
+                  <textarea name="event_params"
+                     id="event-params"
+                     rows="5"
+                     type="text"
+                     placeholder="Key1=Value1,
+Key2=Value2,
+..."></textarea>
+               </div>
+            </div>
+            <div class="form-row">
+               <div class="form-item">
+                  <button
+                     id="create-event"
+                     type="submit"
+                     name="action"
+                     value="create-event"
+                     class="secondary-btn"
+                     >
+                  ⚡️ Create Event
+                  </button>
+               </div>
+            </div>
+         </div>
+         <div class="form-row">
+            <button
+               id="init-sdk"
+               type="submit"
+               name="action"
+               value="init-sdk"
+               class="primary-btn"
+               >
+            ✅ Start SDK
+            </button>
+         </div>
+         <div class="form-row">
+            <button
+               id="stop-sdk"
+               type="submit"
+               name="action"
+               hidden
+               value="stop-sdk"
+               class="secondary-btn"
+               style="background-color: rgb(210, 214, 227)"
+               >
+            ❌ Stop SDK
+            </button>
+         </div>
+      </form>
+      <div class="log-section">
+         <h4>📝 Logs</h4>
+         <div id="log-container" class="log-container">
+         </div>
+      </div>
+      <script type="module" src="./index.ts"></script>
+   </body>
+</html>
