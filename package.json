@@ -1,6 +1,6 @@
 {
   "name": "wisetrack",
-  "version": "2.0.2",
+  "version": "2.0.3",
   "type": "module",
   "description": "WiseTrack Web SDK",
   "main": "dist/cjs/index.js",
@@ -9,7 +9,9 @@
   "unpkg": "dist/cdn/sdk.bundle.min.js",
   "jsdelivr": "dist/cdn/sdk.bundle.min.js",
   "files": [
-    "dist",
+    "dist/cdn",
+    "dist/esm",
+    "dist/cjs",
     "README.md",
     "LICENSE"
   ],

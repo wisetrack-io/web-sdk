@@ -2,9 +2,10 @@ import {
   WiseTrack,
   WTEvent,
   WTInitialConfig,
+  WTLogEngine,
+  WTLogger,
   WTLogLevel,
-} from "../../dist/index.js";
-import { WTLogEngine, WTLogger } from "../../dist/utils/logger.js";
+} from "wisetrack";
 
 const logLevelField = document.getElementById("log-level") as HTMLSelectElement;
 const appTokenField = document.getElementById("app-token") as HTMLInputElement;
@@ -25,6 +26,8 @@ const createCustomEventBtn = document.getElementById(
 ) as HTMLButtonElement;
 
 initBtn.addEventListener("click", async (e) => {
+  console.log("hi from init btn");
+
   e.preventDefault();
 
   const appToken = appTokenField.value;

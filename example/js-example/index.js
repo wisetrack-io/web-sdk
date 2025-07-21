@@ -1,6 +1,3 @@
-import { WiseTrack, WTEvent, WTLogLevel } from "../../dist/index.js";
-import { WTLogEngine, WTLogger } from "../../dist/utils/logger.js";
-
 const logLevelField = document.getElementById("log-level");
 const appTokenField = document.getElementById("app-token");
 const initBtn = document.getElementById("init-sdk");
@@ -21,11 +18,11 @@ initBtn.addEventListener("click", async (e) => {
     appToken: appToken ?? "rMN5ZCwpOzY7",
     appFrameWork: "native",
     appVersion: "1.0.0",
-    logLevel: logLevel ?? WTLogLevel.DEBUG,
+    logLevel: logLevel ?? "debug",
     startTrackerAutomatically: true,
     // trackingWaitingTime: 3,
   };
-  await WiseTrack.instance.init(initialConfig);
+  await WiseTrackSDK.WiseTrack.instance.init(initialConfig);
 
   initBtn.hidden = true;
   stopBtn.hidden = false;
@@ -34,7 +31,7 @@ initBtn.addEventListener("click", async (e) => {
 stopBtn.addEventListener("click", async (e) => {
   e.preventDefault();
 
-  await WiseTrack.instance.stopTracking();
+  await WiseTrackSDK.WiseTrack.instance.stopTracking();
 
   initBtn.hidden = false;
   stopBtn.hidden = true;
@@ -43,7 +40,7 @@ stopBtn.addEventListener("click", async (e) => {
 resetBtn.addEventListener("click", async (e) => {
   e.preventDefault();
 
-  WiseTrack.instance.flush();
+  WiseTrackSDK.WiseTrack.instance.flush();
 });
 
 defaultEventBtn.addEventListener("click", async (e) => {
@@ -53,7 +50,7 @@ defaultEventBtn.addEventListener("click", async (e) => {
   defaultEvent.addParam("key1", "value1");
   defaultEvent.addParam("key2", 123);
   defaultEvent.addParam("key3", true);
-  await WiseTrack.instance.trackEvent(defaultEvent);
+  await WiseTrackSDK.WiseTrack.instance.trackEvent(defaultEvent);
 });
 
 revenueEventBtn.addEventListener("click", async (e) => {
@@ -62,7 +59,7 @@ revenueEventBtn.addEventListener("click", async (e) => {
   const revenueEvent = new WTEvent.Revenue("revenue-event", 100, "USD");
   revenueEvent.addParam("item_id", "item123");
   revenueEvent.addParam("quantity", 2);
-  await WiseTrack.instance.trackEvent(revenueEvent);
+  await WiseTrackSDK.WiseTrack.instance.trackEvent(revenueEvent);
 });
 
 createCustomEventBtn.addEventListener("click", async (e) => {
@@ -109,22 +106,16 @@ createCustomEventBtn.addEventListener("click", async (e) => {
     customEvent.addParam(keyvalue[0].trim(), paramValue);
   }
   console.log(customEvent.toJSON());
-  await WiseTrack.instance.trackEvent(customEvent);
+  await WiseTrackSDK.WiseTrack.instance.trackEvent(customEvent);
 });
 
 setFcmTokenBtn.addEventListener("click", async (e) => {
   e.preventDefault();
 
-  await WiseTrack.instance.setFCMToken("fcm-token-example");
+  await WiseTrackSDK.WiseTrack.instance.setFCMToken("fcm-token-example");
 });
 
-window.addEventListener("load", () => {
-  const logContainer = document.getElementById("log-container");
-  const outputEngine = new CustomLogWriter(logContainer);
-  WTLogger.addOutputEngine(outputEngine);
-});
-
-class CustomLogWriter extends WTLogEngine {
+class CustomLogWriter extends WiseTrackSDK.WTLogEngine {
   constructor(logContainer) {
     super();
     this.logContainer = logContainer;
@@ -132,8 +123,8 @@ class CustomLogWriter extends WTLogEngine {
 
   log(level, prefix, ...args) {
     this.logContainer.innerHTML += `<p class="log ${level.toLowerCase()}">
-        <span class="log-prefix ${level.toLowerCase()}">${prefix}</span> 
-        <span class="log-time">${this.getCurrentTime()}</span> 
+        <span class="log-prefix ${level.toLowerCase()}">${prefix}</span>
+        <span class="log-time">${this.getCurrentTime()}</span>
         <span>${args.join(" ")}</span>
       </p>
       <div class="log-separator"></div>`;
@@ -147,3 +138,9 @@ class CustomLogWriter extends WTLogEngine {
     return `${hours}:${minutes}:${seconds}`;
   }
 }
+
+window.addEventListener("load", () => {
+  const logContainer = document.getElementById("log-container");
+  const outputEngine = new CustomLogWriter(logContainer);
+  WiseTrackSDK.WTLogger.addOutputEngine(outputEngine);
+});

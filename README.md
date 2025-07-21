@@ -24,18 +24,10 @@ A lightweight JavaScript SDK for tracking user behavior and events in your web a
 
 ## 📦 Installation
 
-### Via npm
+### Via npm, yarn or pnpm
 ```bash
 npm install wisetrack
-```
-
-### Via yarn
-```bash
 yarn add wisetrack
-```
-
-### Via pnpm
-```bash
 pnpm add wisetrack
 ```
 
@@ -51,16 +43,16 @@ pnpm add wisetrack
 ### Alternative CDNs
 ```html
 <!-- unpkg -->
-<script src="https://unpkg.com/wisetrack@2.0.0/dist/cdn/sdk.bundle.min.js"></script>
+<script src="https://unpkg.com/wisetrack/dist/cdn/sdk.bundle.min.js"></script>
 ```
 
 ---
 
 ## ✅ Basic Usage
 
-### 📱 For npm/yarn installations (ES6 Modules)
+### For npm/yarn installations (ES6 Modules)
 
-#### 1️⃣ Initialize the SDK
+#### 1. Initialize the SDK
 ```typescript
 import { WiseTrack, WTUserEnvironment, WTLogLevel } from "wisetrack";
 
@@ -73,14 +65,14 @@ await WiseTrack.instance.init({
 });
 ```
 
-#### 2️⃣ Start Tracking (Optional)
+#### 2. Start Tracking (Optional)
 ```typescript
 // Starts automatically if `startTrackerAutomatically` is true.
 // Otherwise, you can start manually:
 await WiseTrack.instance.startTracking();
 ```
 
-#### 3️⃣ Track a Custom Event
+#### 3. Track a Custom Event
 ```typescript
 import { WTEvent } from "wisetrack";
 
@@ -89,7 +81,7 @@ signupEvent.addParam("method", "Google");
 await WiseTrack.instance.trackEvent(signupEvent);
 ```
 
-#### 4️⃣ Track a Revenue Event
+#### 4. Track a Revenue Event
 ```typescript
 import { WTEvent, RevenueCurrency } from "wisetrack";
 
@@ -98,7 +90,7 @@ purchase.addParam("item_id", "SKU-123");
 await WiseTrack.instance.trackEvent(purchase);
 ```
 
-### 🌐 For CDN usage (Direct Browser)
+### For CDN usage (Direct Browser)
 
 ```html
 <!DOCTYPE html>
@@ -126,7 +118,7 @@ await WiseTrack.instance.trackEvent(purchase);
 </html>
 ```
 
-### 🔧 For CommonJS (Node.js)
+### For CommonJS (Node.js)
 ```javascript
 const { WiseTrack, WTUserEnvironment, WTLogLevel } = require("wisetrack");
 
@@ -268,7 +260,7 @@ const config: WTConfig = {
 
 ---
 
-## 🛟 📚 API Reference & Support
+## 📚 API Reference & Support
 
 - [📖 Documentation](https://docs.wisetrack.io)
 - [📖 Detailed TypeDocs](https://github.com/wisetrack-io/web-sdk/tree/main/docs)
