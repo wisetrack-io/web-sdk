@@ -1,5 +1,4 @@
 import { WTInitialConfig } from "../../types/config/initial-config";
-import { WTAppSettings } from "../../types/config/wt-app-settings";
 import { WTConfig } from "../../types/config/wt-config";
 import { RequestRecord } from "../caching/queue-data";
 declare class StorageManager {
@@ -16,8 +15,6 @@ declare class StorageManager {
     set initialConfig(value: WTInitialConfig | null);
     get config(): WTConfig | null;
     set config(value: WTConfig | null);
-    get appSettings(): WTAppSettings | null;
-    set appSettings(value: WTAppSettings | null);
     get sdkEnabled(): boolean;
     set sdkEnabled(value: boolean);
     get sdkClickSubmit(): boolean;

@@ -1,6 +1,6 @@
 {
   "name": "wisetrack",
-  "version": "2.0.3",
+  "version": "2.0.6",
   "type": "module",
   "description": "WiseTrack Web SDK",
   "main": "dist/cjs/index.js",
@@ -20,7 +20,7 @@
     "build": "npm run clean && tsc && npm run bundle",
     "bundle": "rollup -c",
     "prepare": "npm run build",
-    "prepublishOnly": "npm run test && npm run build",
+    "prepublishOnly": "npm run test && npm run docs && npm run build",
     "dev:ts": "vite --config vite.config.ts",
     "dev:js": "vite --config vite.js.config.ts",
     "test": "vitest run",

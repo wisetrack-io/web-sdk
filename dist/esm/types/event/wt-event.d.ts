@@ -1,6 +1,6 @@
 import { RevenueCurrency } from "./revenue-currency";
 type WTEventType = "default" | "revenue";
-type EventParam = string | number | boolean;
+export type EventParam = string | number | boolean;
 export declare namespace WTEvent {
     /**
      * Represents a generic custom event.
@@ -34,12 +34,27 @@ export declare namespace WTEvent {
          */
         constructor(name: string);
         /**
-         * Adds a parameter to the event.
-         *
-         * @param key - The parameter key.
-         * @param value - The parameter value.
-         */
+        * Adds a parameter to the event with validation.
+        *
+        * @param key - The parameter key (max 50 characters, cannot be "no_parameters").
+        * @param value - The parameter value (max 50 characters).
+        * @throws {WTEventValidationError} When validation fails.
+        *
+        * @example
+        * ```ts
+        * event.addParam("category", "electronics");
+        * event.addParam("item_count", 3);
+        * event.addParam("is_premium", true);
+        * ```
+        */
         addParam(key: string, value: EventParam): void;
+        /**
+         * Adds multiple parameters at once with validation.
+         *
+         * @param params - Object containing key-value pairs to add.
+         * @throws {WTEventValidationError} When validation fails for any parameter.
+         */
+        addParams(params: Record<string, EventParam>): void;
         /** @internal */
         toJSON(): {
             event_type: WTEventType;

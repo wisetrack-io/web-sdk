@@ -117,8 +117,6 @@ export declare class WiseTrack {
     /** @internal */
     private getConfig;
     /** @internal */
-    private updateAppSettings;
-    /** @internal */
     private checkSdkEnabled;
     /** @internal */
     private checkSdkUpdate;

@@ -5,7 +5,6 @@ export interface RequestOptions {
     method?: HttpMethod;
     headers?: Record<string, string>;
     params?: Record<string, any>;
-    formData?: Record<string, any>;
     retryAttempt?: number;
 }
 /** @internal */

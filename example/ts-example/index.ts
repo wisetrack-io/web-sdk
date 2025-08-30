@@ -26,8 +26,6 @@ const createCustomEventBtn = document.getElementById(
 ) as HTMLButtonElement;
 
 initBtn.addEventListener("click", async (e) => {
-  console.log("hi from init btn");
-
   e.preventDefault();
 
   const appToken = appTokenField.value;

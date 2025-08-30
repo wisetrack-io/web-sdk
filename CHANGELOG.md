@@ -1,5 +1,26 @@
 # Changelog
 
+## [2.0.6] - 2025-08-30
+
+### Added
+
+- Update Documents
+
+## [2.0.5] - 2025-08-30
+
+### Added
+
+- Event Parameters Validation: Added comprehensive validation for event
+  parameters to prevent malicious content
+- Key and Value validation with 50-character limit and forbidden key
+  restrictions
+
+## [2.0.4] - 2025-07-23
+
+### Fixed
+
+- SDK Initialization: Modify the config and initial SDK structure
+
 ## [2.0.3] - 2025-07-21
 
 ### Fixed

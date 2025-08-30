@@ -3,9 +3,8 @@ import { WTSDKEnvironment } from "./environments";
 /** @internal */
 export declare const WTConstants: {
     readonly SDK: {
-        readonly HASH: "997bfbb583c1245a426a53dc1899ec779ff354f9";
         readonly PLATFORM: "web";
-        readonly VERSION: "2.0.3";
+        readonly VERSION: "2.0.5";
     };
     readonly CONFIG: {
         readonly BASE_URL: "https://config.wisetrack.io";
@@ -13,8 +12,8 @@ export declare const WTConstants: {
     };
     readonly DEFAULTS: {
         readonly LOG_LEVEL: WTLogLevel;
-        readonly SESSION_INTERVAL: "1800000";
-        readonly SUBSESSION_INTERVAL: "300000";
+        readonly SESSION_INTERVAL: "1800";
+        readonly SUBSESSION_INTERVAL: "300";
         readonly PARAMETERS_VALUE: string | undefined;
     };
 };

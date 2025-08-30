@@ -20,6 +20,6 @@ export type WTSDKEnvironment = (typeof WTSDKEnvironment)[keyof typeof WTSDKEnvir
 /** @internal */
 export declare const EnvironmentUtils: {
     sdkEnvironment: WTSDKEnvironment;
-    needAppSettings(): boolean;
-    baseUrl(): string;
+    readonly needResponseDetails: boolean;
+    readonly baseUrl: string;
 };

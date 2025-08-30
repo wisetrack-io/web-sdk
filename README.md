@@ -25,6 +25,7 @@ A lightweight JavaScript SDK for tracking user behavior and events in your web a
 ## 📦 Installation
 
 ### Via npm, yarn or pnpm
+
 ```bash
 npm install wisetrack
 yarn add wisetrack
@@ -32,6 +33,7 @@ pnpm add wisetrack
 ```
 
 ### Via CDN (Direct Browser Usage)
+
 ```html
 <!-- Latest version -->
 <script src="https://cdn.jsdelivr.net/npm/wisetrack/dist/cdn/sdk.bundle.min.js"></script>
@@ -41,6 +43,7 @@ pnpm add wisetrack
 ```
 
 ### Alternative CDNs
+
 ```html
 <!-- unpkg -->
 <script src="https://unpkg.com/wisetrack/dist/cdn/sdk.bundle.min.js"></script>
@@ -53,6 +56,7 @@ pnpm add wisetrack
 ### For npm/yarn installations (ES6 Modules)
 
 #### 1. Initialize the SDK
+
 ```typescript
 import { WiseTrack, WTUserEnvironment, WTLogLevel } from "wisetrack";
 
@@ -66,59 +70,65 @@ await WiseTrack.instance.init({
 ```
 
 #### 2. Start Tracking (Optional)
+
 ```typescript
 // Starts automatically if `startTrackerAutomatically` is true.
 // Otherwise, you can start manually:
 await WiseTrack.instance.startTracking();
 ```
 
-#### 3. Track a Custom Event
+#### 3. Track Event
+
 ```typescript
 import { WTEvent } from "wisetrack";
 
+// Default Event
 const signupEvent = new WTEvent.Default("signup");
 signupEvent.addParam("method", "Google");
 await WiseTrack.instance.trackEvent(signupEvent);
-```
 
-#### 4. Track a Revenue Event
-```typescript
-import { WTEvent, RevenueCurrency } from "wisetrack";
-
-const purchase = new WTEvent.Revenue("order_completed", 99.99, RevenueCurrency.USD);
+// Revenue Event
+const purchase = new WTEvent.Revenue(
+  "order_completed",
+  99.99,
+  RevenueCurrency.USD
+);
 purchase.addParam("item_id", "SKU-123");
 await WiseTrack.instance.trackEvent(purchase);
 ```
+
+**Note:** Event parameter keys and values have a maximum limit of 50 characters.
 
 ### For CDN usage (Direct Browser)
 
 ```html
 <!DOCTYPE html>
 <html>
-<head>
-  <script src="https://cdn.jsdelivr.net/npm/wisetrack/dist/cdn/sdk.bundle.min.js"></script>
-</head>
-<body>
-  <script>
-    // Initialize
-    WiseTrackSDK.WiseTrack.instance.init({
-      appToken: "YOUR_APP_TOKEN",
-      appVersion: "1.0.0",
-      appFrameWork: "Vanilla JS",
-      userEnvironment: WiseTrackSDK.WTUserEnvironment.SANDBOX,
-      logLevel: WiseTrackSDK.WTLogLevel.DEBUG,
-    });
+  <head>
+    <script src="https://cdn.jsdelivr.net/npm/wisetrack/dist/cdn/sdk.bundle.min.js"></script>
+  </head>
+  <body>
+    <script>
+      // Initialize
+      WiseTrackSDK.WiseTrack.instance.init({
+        appToken: "YOUR_APP_TOKEN",
+        appVersion: "1.0.0",
+        appFrameWork: "Vanilla JS",
+        userEnvironment: WiseTrackSDK.WTUserEnvironment.SANDBOX,
+        logLevel: WiseTrackSDK.WTLogLevel.DEBUG,
+      });
 
-    // Track event
-    const signupEvent = new WiseTrackSDK.WTEvent.Default("signup");
-    signupEvent.addParam("method", "Google");
-    WiseTrackSDK.WiseTrack.instance.trackEvent(signupEvent);
-  </script>
-</body>
+      // Track event
+      const signupEvent = new WiseTrackSDK.WTEvent.Default("signup");
+      signupEvent.addParam("method", "Google");
+      WiseTrackSDK.WiseTrack.instance.trackEvent(signupEvent);
+    </script>
+  </body>
 </html>
 ```
 
 ### For CommonJS (Node.js)
+
 ```javascript
 const { WiseTrack, WTUserEnvironment, WTLogLevel } = require("wisetrack");
 
@@ -129,17 +139,17 @@ const { WiseTrack, WTUserEnvironment, WTLogLevel } = require("wisetrack");
 
 ## ⚙️ Configuration Options
 
-| Key | Required | Default | Description |
-| --------------------------- | -------- | ------- | -------------------------------------------------------------- |
-| `appToken` | ✅ | - | Your unique WiseTrack app token |
-| `appVersion` | ✅ | - | Your app version |
-| `appFrameWork` | ✅ | - | The framework/platform name |
-| `userEnvironment` | ❌ | `SANDBOX` | `WTUserEnvironment.SANDBOX` or `WTUserEnvironment.PRODUCTION` |
-| `trackingWaitingTime` | ❌ | `0` | Time in seconds to wait before tracking starts automatically |
-| `startTrackerAutomatically` | ❌ | `true` | Whether to start tracking automatically |
-| `customDeviceId` | ❌ | `auto` | Provide your own device ID |
-| `defaultTracker` | ❌ | - | Optional tracker name |
-| `logLevel` | ❌ | `ERROR` | Logging level (`WTLogLevel.DEBUG` / `INFO` / `WARN` / `ERROR`) |
+| Key                         | Required | Default   | Description                                                    |
+| --------------------------- | -------- | --------- | -------------------------------------------------------------- |
+| `appToken`                  | ✅       | -         | Your unique WiseTrack app token                                |
+| `appVersion`                | ✅       | -         | Your app version                                               |
+| `appFrameWork`              | ✅       | -         | The framework/platform name                                    |
+| `userEnvironment`           | ❌       | `SANDBOX` | `WTUserEnvironment.SANDBOX` or `WTUserEnvironment.PRODUCTION`  |
+| `trackingWaitingTime`       | ❌       | `0`       | Time in seconds to wait before tracking starts automatically   |
+| `startTrackerAutomatically` | ❌       | `true`    | Whether to start tracking automatically                        |
+| `customDeviceId`            | ❌       | `auto`    | Provide your own device ID                                     |
+| `defaultTracker`            | ❌       | -         | Optional tracker name                                          |
+| `logLevel`                  | ❌       | `ERROR`   | Logging level (`WTLogLevel.DEBUG` / `INFO` / `WARN` / `ERROR`) |
 
 ---
 
@@ -165,9 +175,10 @@ WiseTrack.instance.setLogLevel(WTLogLevel.DEBUG);
 ## 🏗️ Framework Examples
 
 ### React/Next.js
+
 ```tsx
-import { useEffect } from 'react';
-import { WiseTrack, WTUserEnvironment } from 'wisetrack';
+import { useEffect } from "react";
+import { WiseTrack, WTUserEnvironment } from "wisetrack";
 
 export default function App() {
   useEffect(() => {
@@ -184,10 +195,11 @@ export default function App() {
 ```
 
 ### Vue.js
+
 ```vue
 <script setup>
-import { onMounted } from 'vue';
-import { WiseTrack, WTUserEnvironment } from 'wisetrack';
+import { onMounted } from "vue";
+import { WiseTrack, WTUserEnvironment } from "wisetrack";
 
 onMounted(() => {
   WiseTrack.instance.init({
@@ -201,13 +213,14 @@ onMounted(() => {
 ```
 
 ### Angular
+
 ```typescript
-import { Component, OnInit } from '@angular/core';
-import { WiseTrack, WTUserEnvironment } from 'wisetrack';
+import { Component, OnInit } from "@angular/core";
+import { WiseTrack, WTUserEnvironment } from "wisetrack";
 
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html'
+  selector: "app-root",
+  templateUrl: "./app.component.html",
 })
 export class AppComponent implements OnInit {
   async ngOnInit() {
@@ -225,11 +238,11 @@ export class AppComponent implements OnInit {
 
 ## 📊 Bundle Size & Performance
 
-| Build Type | Size (Minified) | Size (Gzipped) | Use Case |
-|------------|----------------|----------------|----------|
-| ESM | ~45KB | ~12KB | Modern bundlers (Webpack, Vite) |
-| CommonJS | ~45KB | ~12KB | Node.js, older bundlers |
-| CDN Bundle | ~25KB | ~8KB | Direct browser usage |
+| Build Type | Size (Minified) | Size (Gzipped) | Use Case                        |
+| ---------- | --------------- | -------------- | ------------------------------- |
+| ESM        | ~45KB           | ~12KB          | Modern bundlers (Webpack, Vite) |
+| CommonJS   | ~45KB           | ~12KB          | Node.js, older bundlers         |
+| CDN Bundle | ~25KB           | ~8KB           | Direct browser usage            |
 
 ---
 
@@ -238,7 +251,7 @@ export class AppComponent implements OnInit {
 This package includes TypeScript definitions out of the box. No need to install additional `@types` packages.
 
 ```typescript
-import type { WTConfig, WTEventData } from 'wisetrack';
+import type { WTConfig, WTEventData } from "wisetrack";
 
 const config: WTConfig = {
   appToken: "YOUR_APP_TOKEN",
@@ -252,11 +265,11 @@ const config: WTConfig = {
 ## 🧪 Browser Compatibility
 
 | Browser | Version |
-|---------|---------|
-| Chrome | ≥ 60 |
-| Firefox | ≥ 60 |
-| Safari | ≥ 12 |
-| Edge | ≥ 79 |
+| ------- | ------- |
+| Chrome  | ≥ 60    |
+| Firefox | ≥ 60    |
+| Safari  | ≥ 12    |
+| Edge    | ≥ 79    |
 
 ---
 
