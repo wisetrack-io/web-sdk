@@ -46,20 +46,12 @@ resetBtn.addEventListener("click", async (e) => {
 defaultEventBtn.addEventListener("click", async (e) => {
   e.preventDefault();
 
-  const defaultEvent = new WTEvent.Default("default-event");
-  defaultEvent.addParam("key1", "value1");
-  defaultEvent.addParam("key2", 123);
-  defaultEvent.addParam("key3", true);
+  const defaultEvent = WiseTrackSDK.WTEvent.defaultEvent("default-event", {
+    key1: "value1",
+    key2: 123,
+    key3: true,
+  });
   await WiseTrackSDK.WiseTrack.instance.trackEvent(defaultEvent);
-});
-
-revenueEventBtn.addEventListener("click", async (e) => {
-  e.preventDefault();
-
-  const revenueEvent = new WTEvent.Revenue("revenue-event", 100, "USD");
-  revenueEvent.addParam("item_id", "item123");
-  revenueEvent.addParam("quantity", 2);
-  await WiseTrackSDK.WiseTrack.instance.trackEvent(revenueEvent);
 });
 
 createCustomEventBtn.addEventListener("click", async (e) => {
@@ -75,21 +67,8 @@ createCustomEventBtn.addEventListener("click", async (e) => {
     return;
   }
 
-  let customEvent;
-  switch (eventTypeField.value.toLowerCase()) {
-    case "default":
-      customEvent = new WTEvent.Default(eventName);
-      break;
-
-    case "revenue":
-      customEvent = new WTEvent.Revenue(eventName, 100000, "IRR");
-      break;
-
-    default:
-      return;
-  }
-
   const paramsList = eventParamsField.value.trim().split(",");
+  const params = {};
   for (let param of paramsList) {
     if (!param.includes("=")) continue;
     const keyvalue = param.trim().split("=");
@@ -103,7 +82,26 @@ createCustomEventBtn.addEventListener("click", async (e) => {
     } else {
       paramValue = value;
     }
-    customEvent.addParam(keyvalue[0].trim(), paramValue);
+    params[keyvalue[0].trim()] = paramValue;
+  }
+
+  let customEvent;
+  switch (eventTypeField.value.toLowerCase()) {
+    case "default":
+      customEvent = WiseTrackSDK.WTEvent.defaultEvent(eventName, params);
+      break;
+
+    case "revenue":
+      customEvent = WiseTrackSDK.WTEvent.revenueEvent(
+        eventName,
+        100000,
+        "IRR",
+        params
+      );
+      break;
+
+    default:
+      return;
   }
   console.log(customEvent.toJSON());
   await WiseTrackSDK.WiseTrack.instance.trackEvent(customEvent);
@@ -115,32 +113,23 @@ setFcmTokenBtn.addEventListener("click", async (e) => {
   await WiseTrackSDK.WiseTrack.instance.setFCMToken("fcm-token-example");
 });
 
-class CustomLogWriter extends WiseTrackSDK.WTLogEngine {
-  constructor(logContainer) {
-    super();
-    this.logContainer = logContainer;
-  }
-
-  log(level, prefix, ...args) {
-    this.logContainer.innerHTML += `<p class="log ${level.toLowerCase()}">
-        <span class="log-prefix ${level.toLowerCase()}">${prefix}</span>
-        <span class="log-time">${this.getCurrentTime()}</span>
-        <span>${args.join(" ")}</span>
-      </p>
-      <div class="log-separator"></div>`;
-  }
-
-  getCurrentTime() {
-    const now = new Date();
-    const hours = now.getHours().toString().padStart(2, "0");
-    const minutes = now.getMinutes().toString().padStart(2, "0");
-    const seconds = now.getSeconds().toString().padStart(2, "0");
-    return `${hours}:${minutes}:${seconds}`;
-  }
-}
-
 window.addEventListener("load", () => {
   const logContainer = document.getElementById("log-container");
-  const outputEngine = new CustomLogWriter(logContainer);
-  WiseTrackSDK.WTLogger.addOutputEngine(outputEngine);
+
+  WiseTrackSDK.WTLogger.addOutputEngine((level, prefix, args) => {
+    logContainer.innerHTML += `<p class="log ${level.toLowerCase()}">
+    <span class="log-prefix ${level.toLowerCase()}">${prefix}</span> 
+    <span class="log-time">${getCurrentTime()}</span> 
+    <span>${args.join(" ")}</span>
+  </p>
+  <div class="log-separator"></div>`;
+  });
 });
+
+function getCurrentTime() {
+  const now = new Date();
+  const hours = now.getHours().toString().padStart(2, "0");
+  const minutes = now.getMinutes().toString().padStart(2, "0");
+  const seconds = now.getSeconds().toString().padStart(2, "0");
+  return `${hours}:${minutes}:${seconds}`;
+}

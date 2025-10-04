@@ -83,17 +83,21 @@ await WiseTrack.instance.startTracking();
 import { WTEvent } from "wisetrack";
 
 // Default Event
-const signupEvent = new WTEvent.Default("signup");
+const signupEvent = WTEvent.defaultEvent("signup", {
+  method: "Google",
+});
 signupEvent.addParam("method", "Google");
 await WiseTrack.instance.trackEvent(signupEvent);
 
 // Revenue Event
-const purchase = new WTEvent.Revenue(
+const purchase = WTEvent.revenueEvent(
   "order_completed",
   99.99,
-  RevenueCurrency.USD
+  RevenueCurrency.USD,
+  {
+    item_id: "SKU-123",
+  }
 );
-purchase.addParam("item_id", "SKU-123");
 await WiseTrack.instance.trackEvent(purchase);
 ```
 
@@ -119,9 +123,21 @@ await WiseTrack.instance.trackEvent(purchase);
       });
 
       // Track event
-      const signupEvent = new WiseTrackSDK.WTEvent.Default("signup");
-      signupEvent.addParam("method", "Google");
+      const signupEvent = WiseTrackSDK.WTEvent.defaultEvent("signup", {
+        method: "Google",
+      });
       WiseTrackSDK.WiseTrack.instance.trackEvent(signupEvent);
+
+      // Track revenue event
+      const purchaseEvent = WiseTrackSDK.WTEvent.revenueEvent(
+        "buy-plan-one",
+        100.0,
+        "USD",
+        {
+          user: "some user id",
+        }
+      );
+      WiseTrackSDK.WiseTrack.instance.trackEvent(purchaseEvent);
     </script>
   </body>
 </html>
@@ -139,18 +155,17 @@ const { WiseTrack, WTUserEnvironment, WTLogLevel } = require("wisetrack");
 
 ## ⚙️ Configuration Options
 
-| Key                         | Required | Default   | Description                                                    |
-| --------------------------- | -------- | --------- | -------------------------------------------------------------- |
-| `appToken`                  | ✅       | -         | Your unique WiseTrack app token                                |
-| `appVersion`                | ✅       | -         | Your app version                                               |
-| `appFrameWork`              | ✅       | -         | The framework/platform name                                    |
-| `userEnvironment`           | ❌       | `SANDBOX` | `WTUserEnvironment.SANDBOX` or `WTUserEnvironment.PRODUCTION`  |
-| `trackingWaitingTime`       | ❌       | `0`       | Time in seconds to wait before tracking starts automatically   |
-| `startTrackerAutomatically` | ❌       | `true`    | Whether to start tracking automatically                        |
-| `customDeviceId`            | ❌       | `auto`    | Provide your own device ID                                     |
-| `defaultTracker`            | ❌       | -         | Optional tracker name                                          |
-| `logLevel`                  | ❌       | `ERROR`   | Logging level (`WTLogLevel.DEBUG` / `INFO` / `WARN` / `ERROR`) |
-
+| Key                         | Required | Default      | Description                                                    |
+| --------------------------- | -------- | ------------ | -------------------------------------------------------------- |
+| `appToken`                  | ✅       | -            | Your unique WiseTrack app token                                |
+| `appVersion`                | ✅       | -            | Your app version                                               |
+| `appFrameWork`              | ✅       | -            | The framework/platform name                                    |
+| `userEnvironment`           | ❌       | `PRODUCTION` | `WTUserEnvironment.SANDBOX` or `WTUserEnvironment.PRODUCTION`  |
+| `trackingWaitingTime`       | ❌       | `0`          | Time in seconds to wait before tracking starts automatically   |
+| `startTrackerAutomatically` | ❌       | `true`       | Whether to start tracking automatically                        |
+| `customDeviceId`            | ❌       | `auto`       | Provide your own device ID                                     |
+| `defaultTracker`            | ❌       | -            | Optional tracker name                                          |
+| `logLevel`                  | ❌       | `INFO`       | Logging level (`WTLogLevel.DEBUG` / `INFO` / `WARN` / `ERROR`) |
 ---
 
 ## 🧹 Flush / Stop Tracking

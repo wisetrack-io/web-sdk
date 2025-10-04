@@ -1,5 +1,28 @@
 # Changelog
 
+All notable changes to this project will be documented in this file.
+
+The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
+and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+
+## [2.0.7] - 2025-10-04
+
+### Removed
+
+- **Legacy Event Classes**: Removed `WTEvent.Default` and `WTEvent.Revenue` classes in favor of static factory methods
+- **Redundant Methods**: Eliminated `addParam()` and `toJSON()` methods for cleaner API
+
+### Changed
+
+- **WTEvent API Refactor**: Completely redesigned WTEvent class with simplified static factory methods
+
+  - `WTEvent.defaultEvent(name, params)` replaces `new WTEvent.Default(name).addParam()`
+  - `WTEvent.revenueEvent(name, amount, currency, params)` replaces `new WTEvent.Revenue(name, amount, currency).addParam()`
+  - Parameters are now passed as a single object instead of multiple `addParam()` calls
+
+- **Log Level Default**: Changed default log level from `debug` to `info` for better production experience
+- **SDK Environment Default**: Changed default SDK environment to `production`
+
 ## [2.0.6] - 2025-08-30
 
 ### Added
