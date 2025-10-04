@@ -100,20 +100,22 @@ export declare class WiseTrack {
      * @example
      * ```ts
      * // Create a Default Event
-     * const defaultEvent = new WTEvent.Default("default-event");
-     * defaultEvent.addParam("key1", "value1");
-     * defaultEvent.addParam("key2", 123);
-     * defaultEvent.addParam("key3", true);
+     * const defaultEvent = new WTEvent.defaultEvent("default-event", {
+     *  key1: "value1",
+     *  key2: 123,
+     *  key3: true
+     * });
      * await WiseTrack.instance.trackEvent(defaultEvent);
      *
      * // Create a Revenue Event
-     * const revenueEvent = new WTEvent.Revenue("revenue-event", 100, "USD");
-     * revenueEvent.addParam("item_id", "item123");
-     * revenueEvent.addParam("quantity", 2);
+     * const revenueEvent = new WTEvent.revenueEvent("revenue-event", 100, "USD", {
+     *  item_id: "item123",
+     *  quantity: 2
+     * });
      * await WiseTrack.instance.trackEvent(revenueEvent);
      * ```
      */
-    trackEvent(event: WTEvent.Default | WTEvent.Revenue): Promise<void>;
+    trackEvent(event: WTEvent): Promise<void>;
     /** @internal */
     private getConfig;
     /** @internal */

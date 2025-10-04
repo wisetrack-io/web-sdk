@@ -4,10 +4,9 @@ import { WTSDKEnvironment } from "./environments";
 export declare const WTConstants: {
     readonly SDK: {
         readonly PLATFORM: "web";
-        readonly VERSION: "2.0.5";
+        readonly VERSION: "2.0.7";
     };
     readonly CONFIG: {
-        readonly BASE_URL: "https://config.wisetrack.io";
         readonly DEFAULT_ENVIRONMENT: WTSDKEnvironment;
     };
     readonly DEFAULTS: {

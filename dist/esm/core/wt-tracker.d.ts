@@ -8,7 +8,7 @@ declare class WTTracker {
     startTracking(): Promise<void>;
     stopTracking(): Promise<void>;
     checkPushToken(token: string): Promise<void>;
-    trackEvent(event: WTEvent.Default | WTEvent.Revenue): Promise<void>;
+    trackEvent(event: WTEvent): Promise<void>;
     private getCountryCode;
     private createAttribution;
     private checkFirstSession;

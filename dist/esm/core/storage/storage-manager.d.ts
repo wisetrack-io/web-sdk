@@ -1,3 +1,4 @@
+import { WTSDKEnvironment } from "../../constants/environments";
 import { WTInitialConfig } from "../../types/config/initial-config";
 import { WTConfig } from "../../types/config/wt-config";
 import { RequestRecord } from "../caching/queue-data";
@@ -43,6 +44,8 @@ declare class StorageManager {
     set pendingRequestRecords(value: RequestRecord[]);
     get eventCount(): number;
     set eventCount(value: number);
+    get sdkEnvironment(): WTSDKEnvironment | null;
+    set sdkEnvironment(value: string);
 }
 /** @internal */
 export declare const storageManager: StorageManager;

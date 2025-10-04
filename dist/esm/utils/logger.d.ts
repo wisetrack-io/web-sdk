@@ -1,7 +1,5 @@
 /** @internal */
-export declare abstract class WTLogEngine {
-    abstract log(level: string, prefix: string, ...args: any[]): void;
-}
+export type WTLogEngine = (level: string, prefix: string, args: any[]) => void;
 /**
  * Defines the available log levels for the SDK.
  *

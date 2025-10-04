@@ -1,109 +1,93 @@
 import { RevenueCurrency } from "./revenue-currency";
 type WTEventType = "default" | "revenue";
 export type EventParam = string | number | boolean;
-export declare namespace WTEvent {
+/**
+ * Represents an event that can be tracked.
+ *
+ * Use the static factory methods to create events:
+ * - `WTEvent.defaultEvent()` for default events
+ * - `WTEvent.revenueEvent()` for revenue/purchase events
+ *
+ * @example
+ * ```ts
+ * // Simple event
+ * const event1 = WTEvent.defaultEvent("signup");
+ *
+ * // Event with parameters
+ * const event2 = WTEvent.defaultEvent("signup", { method: "Google", platform: "web" });
+ *
+ * // Revenue event
+ * const purchase = WTEvent.revenueEvent("order_complete", 49.99, RevenueCurrency.USD, {
+ *   item_count: 3,
+ *   payment_method: "credit_card"
+ * });
+ *
+ * WiseTrack.instance.trackEvent(event1);
+ * ```
+ */
+export declare class WTEvent {
     /**
-     * Represents a generic custom event.
+     * The type of event.
+     * @internal
+     */
+    readonly type: WTEventType;
+    /**
+     * The name of the event.
+     */
+    readonly name: string;
+    /**
+     * Custom key-value parameters for the event.
+     */
+    readonly params: Record<string, EventParam>;
+    /**
+     * The revenue amount (only for revenue events).
+     */
+    readonly amount?: number;
+    /**
+     * The currency of the revenue (only for revenue events).
+     */
+    readonly currency?: RevenueCurrency;
+    /**
+     * Private constructor. Use static factory methods instead.
+     * @internal
+     */
+    private constructor();
+    /**
+     * Creates a default event for tracking default user actions.
      *
-     * Use this class to log custom actions performed by the user.
+     * @param name - The name of the event.
+     * @param params - Optional custom key-value parameters for the event.
+     * @returns A new WTEvent instance.
      *
      * @example
      * ```ts
-     * const event = new WTEvent.Default("signup");
-     * event.addParam("method", "Google");
+     * const event = WTEvent.defaultEvent("button_click", { button_id: "signup" });
      * WiseTrack.instance.trackEvent(event);
      * ```
      */
-    class Default {
-        /**
-         * The type of event.
-         * @internal
-         */
-        readonly type: WTEventType;
-        /**
-         * Optional custom key-value parameters for the event.
-         */
-        params?: Record<string, EventParam>;
-        /**
-         * The name of the event.
-         */
-        name: string;
-        /**
-         * Creates a new custom event.
-         * @param name - The name of the event.
-         */
-        constructor(name: string);
-        /**
-        * Adds a parameter to the event with validation.
-        *
-        * @param key - The parameter key (max 50 characters, cannot be "no_parameters").
-        * @param value - The parameter value (max 50 characters).
-        * @throws {WTEventValidationError} When validation fails.
-        *
-        * @example
-        * ```ts
-        * event.addParam("category", "electronics");
-        * event.addParam("item_count", 3);
-        * event.addParam("is_premium", true);
-        * ```
-        */
-        addParam(key: string, value: EventParam): void;
-        /**
-         * Adds multiple parameters at once with validation.
-         *
-         * @param params - Object containing key-value pairs to add.
-         * @throws {WTEventValidationError} When validation fails for any parameter.
-         */
-        addParams(params: Record<string, EventParam>): void;
-        /** @internal */
-        toJSON(): {
-            event_type: WTEventType;
-            event_name: string;
-            partner_params: Record<string, EventParam> | undefined;
-        };
-    }
+    static defaultEvent(name: string, params?: Record<string, EventParam>): WTEvent;
     /**
-     * Represents a revenue event with an amount and currency.
+     * Creates a revenue event for tracking purchases or monetary transactions.
      *
-     * Use this class to log purchases or monetary transactions.
+     * @param name - The name of the revenue event.
+     * @param amount - The amount of revenue.
+     * @param currency - The currency of the revenue.
+     * @param params - Optional custom key-value parameters for the event.
+     * @returns A new WTEvent instance.
      *
      * @example
      * ```ts
-     * const purchase = new WTEvent.Revenue("order_complete", 49.99, RevenueCurrency.USD);
-     * purchase.addParam("item_count", "3");
+     * const purchase = WTEvent.revenueEvent("purchase", 99.99, RevenueCurrency.USD, {
+     *   item_count: 3
+     * });
      * WiseTrack.instance.trackEvent(purchase);
      * ```
      */
-    class Revenue extends Default {
-        /**
-         * The type of event.
-         * @internal
-         */
-        readonly type: WTEventType;
-        /**
-         * The revenue amount.
-         */
-        amount: number;
-        /**
-         * The currency of the revenue.
-         */
-        currency: RevenueCurrency;
-        /**
-         * Creates a new revenue event.
-         *
-         * @param name - The name of the revenue event.
-         * @param amount - The amount of revenue.
-         * @param currency - The currency of the revenue.
-         */
-        constructor(name: string, amount: number, currency: RevenueCurrency);
-        /** @internal */
-        toJSON(): {
-            event_type: WTEventType;
-            event_name: string;
-            revenue: number;
-            currency: RevenueCurrency;
-            partner_params: Record<string, EventParam> | undefined;
-        };
-    }
+    static revenueEvent(name: string, amount: number, currency: RevenueCurrency, params?: Record<string, EventParam>): WTEvent;
+    /**
+     * Validates and sets multiple parameters.
+     * @internal
+     */
+    private validateAndSetParams;
 }
 export {};

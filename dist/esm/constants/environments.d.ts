@@ -19,7 +19,7 @@ export declare const WTSDKEnvironment: {
 export type WTSDKEnvironment = (typeof WTSDKEnvironment)[keyof typeof WTSDKEnvironment];
 /** @internal */
 export declare const EnvironmentUtils: {
-    sdkEnvironment: WTSDKEnvironment;
+    readonly sdkEnvironment: WTSDKEnvironment;
     readonly needResponseDetails: boolean;
     readonly baseUrl: string;
 };
