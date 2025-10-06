@@ -46,6 +46,8 @@ declare class StorageManager {
     set eventCount(value: number);
     get sdkEnvironment(): WTSDKEnvironment | null;
     set sdkEnvironment(value: string);
+    get sdkVersion(): string;
+    set sdkVersion(value: string);
 }
 /** @internal */
 export declare const storageManager: StorageManager;
