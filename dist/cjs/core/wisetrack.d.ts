@@ -24,6 +24,7 @@ export declare class WiseTrack {
     static get instance(): WiseTrack;
     private constructor();
     private sdkInitialized;
+    private isInitializing;
     /**
      * Initializes the WiseTrack SDK with the given configuration.
      *

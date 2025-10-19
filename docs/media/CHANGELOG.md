@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.0.9] - 2025-10-19
+
+### Added
+
+- **Initialization Flow**: Improved SDK initialization logic with better state management for prevent multiple SDK initialization calls
+- **Enhanced Network Configuration**: Prevent requests caching
+
 ## [2.0.8] - 2025-10-06
 
 ### Changed

@@ -4,7 +4,7 @@ import { WTSDKEnvironment } from "./environments";
 export declare const WTConstants: {
     readonly SDK: {
         readonly PLATFORM: "web";
-        readonly VERSION: "2.0.8";
+        readonly VERSION: "2.0.9";
     };
     readonly CONFIG: {
         readonly DEFAULT_ENVIRONMENT: WTSDKEnvironment;
