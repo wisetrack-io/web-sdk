@@ -1,5 +1,6 @@
 const logLevelField = document.getElementById("log-level");
 const appTokenField = document.getElementById("app-token");
+const clientSecretField = document.getElementById("client-secret");
 const initBtn = document.getElementById("init-sdk");
 const stopBtn = document.getElementById("stop-sdk");
 const setFcmTokenBtn = document.getElementById("fcm-token");
@@ -12,10 +13,12 @@ initBtn.addEventListener("click", async (e) => {
   e.preventDefault();
 
   const appToken = appTokenField.value;
+  const clientSecret = clientSecretField.value;
   const logLevel = logLevelField.value;
 
   const initialConfig = {
-    appToken: appToken ?? "rMN5ZCwpOzY7",
+    appToken: appToken,
+    clientSecret: clientSecret,
     appFrameWork: "native",
     appVersion: "1.0.0",
     logLevel: logLevel ?? "debug",
@@ -52,6 +55,17 @@ defaultEventBtn.addEventListener("click", async (e) => {
     key3: true,
   });
   await WiseTrackSDK.WiseTrack.instance.trackEvent(defaultEvent);
+});
+
+revenueEventBtn.addEventListener("click", async (e) => {
+  e.preventDefault();
+
+  const revenueEvent = WiseTrackSDK.WTEvent.revenueEvent("revenue-event", 100000, "IRR", {
+    key1: "value1",
+    key2: 123,
+    key3: true,
+  });
+  await WiseTrackSDK.WiseTrack.instance.trackEvent(revenueEvent);
 });
 
 createCustomEventBtn.addEventListener("click", async (e) => {

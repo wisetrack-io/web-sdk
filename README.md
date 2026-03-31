@@ -15,10 +15,9 @@ A lightweight JavaScript SDK for tracking user behavior and events in your web a
 - Supports custom and revenue events
 - Environment-based configuration (Sandbox & Production)
 - Automatic or manual tracking control
+- Deep link tracking and handling with deferred deep link support
 - Customizable logging level
 - TypeScript support with full type definitions
-- Tree-shakable ESM and CommonJS builds
-- Zero dependencies (except ua-parser-js)
 
 ---
 
@@ -62,6 +61,7 @@ import { WiseTrack, WTUserEnvironment, WTLogLevel } from "wisetrack";
 
 await WiseTrack.instance.init({
   appToken: "YOUR_APP_TOKEN",
+  clientSecret: "YOUR_CLIENT_SECRET",
   appVersion: "1.0.0",
   appFrameWork: "Next.js",
   userEnvironment: WTUserEnvironment.SANDBOX,
@@ -116,6 +116,7 @@ await WiseTrack.instance.trackEvent(purchase);
       // Initialize
       WiseTrackSDK.WiseTrack.instance.init({
         appToken: "YOUR_APP_TOKEN",
+        clientSecret: "YOUR_CLIENT_SECRET",
         appVersion: "1.0.0",
         appFrameWork: "Vanilla JS",
         userEnvironment: WiseTrackSDK.WTUserEnvironment.SANDBOX,
@@ -151,6 +152,22 @@ const { WiseTrack, WTUserEnvironment, WTLogLevel } = require("wisetrack");
 // Same usage as ES6 modules
 ```
 
+### Using in Progressive Web Apps (PWA)
+
+WiseTrack is fully compatible with Progressive Web Apps (PWAs).
+However, to ensure accurate tracking and data delivery, please note:
+
+**Exclude WiseTrack API requests from Service Worker caching**
+If you are using `workbox` or a custom `service-worker.js`,
+add this rule to avoid caching:
+
+```js
+workbox.routing.registerRoute(
+  ({ url }) => url.origin.includes("wisetrack.io"),
+  new workbox.strategies.NetworkOnly()
+);
+```
+
 ---
 
 ## ⚙️ Configuration Options
@@ -158,6 +175,7 @@ const { WiseTrack, WTUserEnvironment, WTLogLevel } = require("wisetrack");
 | Key                         | Required | Default      | Description                                                    |
 | --------------------------- | -------- | ------------ | -------------------------------------------------------------- |
 | `appToken`                  | ✅       | -            | Your unique WiseTrack app token                                |
+| `clientSecret`              | ✅       | -            | Your client secret provided by WiseTrack Panel                |
 | `appVersion`                | ✅       | -            | Your app version                                               |
 | `appFrameWork`              | ✅       | -            | The framework/platform name                                    |
 | `userEnvironment`           | ❌       | `PRODUCTION` | `WTUserEnvironment.SANDBOX` or `WTUserEnvironment.PRODUCTION`  |
@@ -166,6 +184,8 @@ const { WiseTrack, WTUserEnvironment, WTLogLevel } = require("wisetrack");
 | `customDeviceId`            | ❌       | `auto`       | Provide your own device ID                                     |
 | `defaultTracker`            | ❌       | -            | Optional tracker name                                          |
 | `logLevel`                  | ❌       | `INFO`       | Logging level (`WTLogLevel.DEBUG` / `INFO` / `WARN` / `ERROR`) |
+| `deeplinkEnabled`           | ❌       | `true`       | Whether to enable deep link tracking and handling              |
+
 ---
 
 ## 🧹 Flush / Stop Tracking
@@ -173,6 +193,70 @@ const { WiseTrack, WTUserEnvironment, WTLogLevel } = require("wisetrack");
 ```typescript
 // Stop tracking and clear stored data
 WiseTrack.instance.flush();
+```
+
+---
+
+## 🔗 Deep Link Handling
+
+WiseTrack SDK provides comprehensive deep link tracking and handling capabilities for attribution and user engagement.
+
+### Listening to Deep Links
+
+Set a callback listener to receive deep link events:
+
+```typescript
+import { DeeplinkHandler } from "wisetrack";
+
+WiseTrack.instance.setOnDeeplinkListener((uri: string, isDeferred: boolean) => {
+  console.log("Deep link received:", uri);
+  console.log("Is deferred:", isDeferred);
+  
+  // Handle the deep link (e.g., navigate to the URL)
+  if (isDeferred) {
+    // This is a deferred deep link (for attribution after app install)
+    // window.location.href = uri;
+    // navigate(deepLink.path);
+    // router.push(deepLink.path);
+    // or any navigation method here ...
+
+  } else {
+    // Regular deep link
+    // Handle navigation or other actions
+  }
+});
+```
+
+### Getting Deep Links
+
+Retrieve the last recorded deep link or deferred deep link:
+
+```typescript
+// Get the last recorded deep link
+const lastDeeplink = WiseTrack.instance.getLastDeeplink();
+if (lastDeeplink) {
+  console.log("Last deeplink:", lastDeeplink);
+}
+
+// Get the deferred deep link (for attribution)
+const deferredDeeplink = WiseTrack.instance.getDeferredDeeplink();
+if (deferredDeeplink) {
+  console.log("Deferred deeplink:", deferredDeeplink);
+}
+```
+
+### Disabling Deep Link Tracking
+
+If you want to disable deep link tracking, set `deeplinkEnabled` to `false` in your initial configuration:
+
+```typescript
+await WiseTrack.instance.init({
+  appToken: "YOUR_APP_TOKEN",
+  clientSecret: "YOUR_CLIENT_SECRET",
+  appVersion: "1.0.0",
+  appFrameWork: "Next.js",
+  deeplinkEnabled: false, // Disable deep link tracking
+});
 ```
 
 ---
@@ -199,6 +283,7 @@ export default function App() {
   useEffect(() => {
     WiseTrack.instance.init({
       appToken: "YOUR_APP_TOKEN",
+      clientSecret: "YOUR_CLIENT_SECRET",
       appVersion: "1.0.0",
       appFrameWork: "React",
       userEnvironment: WTUserEnvironment.PRODUCTION,
@@ -219,6 +304,7 @@ import { WiseTrack, WTUserEnvironment } from "wisetrack";
 onMounted(() => {
   WiseTrack.instance.init({
     appToken: "YOUR_APP_TOKEN",
+    clientSecret: "YOUR_CLIENT_SECRET",
     appVersion: "1.0.0",
     appFrameWork: "Vue.js",
     userEnvironment: WTUserEnvironment.PRODUCTION,
@@ -241,6 +327,7 @@ export class AppComponent implements OnInit {
   async ngOnInit() {
     await WiseTrack.instance.init({
       appToken: "YOUR_APP_TOKEN",
+      clientSecret: "YOUR_CLIENT_SECRET",
       appVersion: "1.0.0",
       appFrameWork: "Angular",
       userEnvironment: WTUserEnvironment.PRODUCTION,
@@ -249,15 +336,6 @@ export class AppComponent implements OnInit {
 }
 ```
 
----
-
-## 📊 Bundle Size & Performance
-
-| Build Type | Size (Minified) | Size (Gzipped) | Use Case                        |
-| ---------- | --------------- | -------------- | ------------------------------- |
-| ESM        | ~45KB           | ~12KB          | Modern bundlers (Webpack, Vite) |
-| CommonJS   | ~45KB           | ~12KB          | Node.js, older bundlers         |
-| CDN Bundle | ~25KB           | ~8KB           | Direct browser usage            |
 
 ---
 
@@ -266,25 +344,15 @@ export class AppComponent implements OnInit {
 This package includes TypeScript definitions out of the box. No need to install additional `@types` packages.
 
 ```typescript
-import type { WTConfig, WTEventData } from "wisetrack";
+import type { WTInitialConfig, WTEventData } from "wisetrack";
 
-const config: WTConfig = {
+const config: WTInitialConfig = {
   appToken: "YOUR_APP_TOKEN",
+  clientSecret: "YOUR_CLIENT_SECRET",
   appVersion: "1.0.0",
   appFrameWork: "TypeScript App",
 };
 ```
-
----
-
-## 🧪 Browser Compatibility
-
-| Browser | Version |
-| ------- | ------- |
-| Chrome  | ≥ 60    |
-| Firefox | ≥ 60    |
-| Safari  | ≥ 12    |
-| Edge    | ≥ 79    |
 
 ---
 

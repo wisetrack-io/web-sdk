@@ -1,5 +1,21 @@
 # Changelog
 
+## [2.1.0] - 2026-01-26
+
+### Added
+
+- **Client Secret Authentication**: Added required `clientSecret` field to `WTInitialConfig` for enhanced security
+- **Deep Link Tracking & Handling**: Comprehensive deep link support for attribution and user engagement
+  - `setOnDeeplinkListener(callback)` - Set callback to receive deep link events
+  - `getLastDeeplink()` - Retrieve the last recorded deep link
+  - `getDeferredDeeplink()` - Get deferred deep links for attribution
+  - `deeplinkEnabled` configuration option (defaults to `true`)
+
+### Changed
+
+- **Configuration API**: `clientSecret` is now a required field in `WTInitialConfig`
+- **SDK Initialization**: Enhanced initialization flow with better error handling and state management
+
 ## [2.0.9] - 2025-10-19
 
 ### Added
@@ -23,7 +39,6 @@
 ### Changed
 
 - **WTEvent API Refactor**: Completely redesigned WTEvent class with simplified static factory methods
-
   - `WTEvent.defaultEvent(name, params)` replaces `new WTEvent.Default(name).addParam()`
   - `WTEvent.revenueEvent(name, amount, currency, params)` replaces `new WTEvent.Revenue(name, amount, currency).addParam()`
   - Parameters are now passed as a single object instead of multiple `addParam()` calls

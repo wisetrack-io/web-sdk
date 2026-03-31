@@ -8,36 +8,48 @@ import {
 
 const logLevelField = document.getElementById("log-level") as HTMLSelectElement;
 const appTokenField = document.getElementById("app-token") as HTMLInputElement;
+const clientSecretField = document.getElementById(
+  "client-secret",
+) as HTMLInputElement;
 const initBtn = document.getElementById("init-sdk") as HTMLButtonElement;
 const stopBtn = document.getElementById("stop-sdk") as HTMLButtonElement;
 const setFcmTokenBtn = document.getElementById(
-  "fcm-token"
+  "fcm-token",
 ) as HTMLButtonElement;
 const resetBtn = document.getElementById("reset-sdk") as HTMLLinkElement;
 const defaultEventBtn = document.getElementById(
-  "default-event"
+  "default-event",
 ) as HTMLButtonElement;
 const revenueEventBtn = document.getElementById(
-  "revenue-event"
+  "revenue-event",
 ) as HTMLButtonElement;
 const createCustomEventBtn = document.getElementById(
-  "create-event"
+  "create-event",
 ) as HTMLButtonElement;
 
 initBtn.addEventListener("click", async (e) => {
   e.preventDefault();
 
   const appToken = appTokenField.value;
+  const clientSecret = clientSecretField.value;
   const logLevel = logLevelField.value as WTLogLevel;
 
   const initialConfig: WTInitialConfig = {
-    appToken: appToken ?? "rMN5ZCwpOzY7",
+    appToken: appToken,
+    clientSecret: clientSecret,
     appFrameWork: "native",
     appVersion: "1.0.0",
     logLevel: logLevel ?? WTLogLevel.DEBUG,
     startTrackerAutomatically: true,
     // trackingWaitingTime: 3,
   };
+  WiseTrack.instance.setOnDeeplinkListener((uri, isDeferred) => {
+    console.log("Deeplink Received =>", uri, "isDeferred =>", isDeferred);
+    if (isDeferred) {
+      // window.location.href = uri;
+    }
+  });
+
   await WiseTrack.instance.init(initialConfig);
 
   initBtn.hidden = true;
@@ -85,15 +97,15 @@ createCustomEventBtn.addEventListener("click", async (e) => {
   e.preventDefault();
 
   const eventNameField = document.getElementById(
-    "event-name"
+    "event-name",
   ) as HTMLInputElement;
 
   const eventTypeField = document.getElementById(
-    "event-type"
+    "event-type",
   ) as HTMLSelectElement;
 
   const eventParamsField = document.getElementById(
-    "event-params"
+    "event-params",
   ) as HTMLTextAreaElement;
 
   const eventName = eventNameField.value.trim();
@@ -146,7 +158,6 @@ setFcmTokenBtn.addEventListener("click", async (e) => {
 window.addEventListener("load", () => {
   const logContainer = document.getElementById("log-container");
   WTLogger.addOutputEngine((level: string, prefix: string, ...args: any[]) => {
-    console.log("Log engine called", level, prefix, args);
     logContainer!.innerHTML += `<p class="log ${level.toLowerCase()}">
     <span class="log-prefix ${level.toLowerCase()}">${prefix}</span> 
     <span class="log-time">${getCurrentTime()}</span> 
