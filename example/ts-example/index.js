@@ -10,7 +10,6 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 import { WiseTrack, WTEvent, WTLogger, WTLogLevel, } from "wisetrack";
 const logLevelField = document.getElementById("log-level");
 const appTokenField = document.getElementById("app-token");
-const clientSecretField = document.getElementById("client-secret");
 const initBtn = document.getElementById("init-sdk");
 const stopBtn = document.getElementById("stop-sdk");
 const setFcmTokenBtn = document.getElementById("fcm-token");
@@ -21,23 +20,16 @@ const createCustomEventBtn = document.getElementById("create-event");
 initBtn.addEventListener("click", (e) => __awaiter(void 0, void 0, void 0, function* () {
     e.preventDefault();
     const appToken = appTokenField.value;
-    const clientSecret = clientSecretField.value;
     const logLevel = logLevelField.value;
     const initialConfig = {
-        appToken: appToken,
-        clientSecret: clientSecret,
+        appToken: appToken !== null && appToken !== void 0 ? appToken : "qicoNKCOt3c9",
+        clientSecret: "test-secret",
         appFrameWork: "native",
         appVersion: "1.0.0",
         logLevel: logLevel !== null && logLevel !== void 0 ? logLevel : WTLogLevel.DEBUG,
         startTrackerAutomatically: true,
         // trackingWaitingTime: 3,
     };
-    WiseTrack.instance.setOnDeeplinkListener((uri, isDeferred) => {
-        console.log("Deeplink Received =>", uri, "isDeferred =>", isDeferred);
-        if (isDeferred) {
-            // window.location.href = uri;
-        }
-    });
     yield WiseTrack.instance.init(initialConfig);
     initBtn.hidden = true;
     stopBtn.hidden = false;

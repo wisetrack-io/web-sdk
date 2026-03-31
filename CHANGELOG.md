@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.1.2] - 2026-03-31
+
+### Fixed
+
+- **Build Compatibility**: Fixed build and type-check issues caused by updated dev dependencies
+- **TypeScript 6 Support**: Resolved deprecated and incompatible compiler options for TypeScript 6
+
 ## [2.1.0] - 2026-01-26
 
 ### Added
