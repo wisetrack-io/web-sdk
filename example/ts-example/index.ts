@@ -1,4 +1,5 @@
 import {
+  ResourceWrapper,
   WiseTrack,
   WTEvent,
   WTInitialConfig,

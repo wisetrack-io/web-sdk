@@ -1,5 +1,11 @@
 # Changelog
 
+## [2.1.3] - 2026-04-21
+
+### Fixed
+
+- **Session Tracking**: Fix session tracking issues
+
 ## [2.1.2] - 2026-03-31
 
 ### Fixed

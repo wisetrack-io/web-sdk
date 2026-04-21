@@ -60,11 +60,16 @@ defaultEventBtn.addEventListener("click", async (e) => {
 revenueEventBtn.addEventListener("click", async (e) => {
   e.preventDefault();
 
-  const revenueEvent = WiseTrackSDK.WTEvent.revenueEvent("revenue-event", 100000, "IRR", {
-    key1: "value1",
-    key2: 123,
-    key3: true,
-  });
+  const revenueEvent = WiseTrackSDK.WTEvent.revenueEvent(
+    "revenue-event",
+    100000,
+    "IRR",
+    {
+      key1: "value1",
+      key2: 123,
+      key3: true,
+    },
+  );
   await WiseTrackSDK.WiseTrack.instance.trackEvent(revenueEvent);
 });
 
@@ -110,7 +115,7 @@ createCustomEventBtn.addEventListener("click", async (e) => {
         eventName,
         100000,
         "IRR",
-        params
+        params,
       );
       break;
 
