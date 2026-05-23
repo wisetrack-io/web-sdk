@@ -1,10 +1,12 @@
 # Changelog
 
-## [2.2.0] - 2026-05-23
 
-### Added
+## [2.2.1] - 2026-05-23
 
-- **Screen Tracking**: Add User Journey Screen Tracking feature
+### Fixed
+
+- **Session Tracking**: Fix session tracking issues
+
 
 ## [2.1.3] - 2026-04-21
 
