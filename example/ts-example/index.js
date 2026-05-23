@@ -7,7 +7,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-import { WiseTrack, WTEvent, WTLogger, WTLogLevel, } from "wisetrack";
+import { ResourceWrapper, WiseTrack, WTEvent, WTLogger, WTLogLevel, } from "wisetrack"; // "../../dist/";
 const logLevelField = document.getElementById("log-level");
 const appTokenField = document.getElementById("app-token");
 const clientSecretField = document.getElementById("client-secret");

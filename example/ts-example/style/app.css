@@ -232,3 +232,32 @@ p.error {
     margin-top: 16px;
   }
 }
+
+
+.demo-nav {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.nav-btn {
+  padding: 6px 14px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 500;
+  text-decoration: none;
+  background-color: var(--primary);
+  color: white;
+  white-space: nowrap;
+  transition: opacity 0.15s;
+}
+
+.nav-btn:hover {
+  opacity: 0.85;
+}
+
+.nav-btn-react {
+  background-color: #61dafb;
+  color: #1a1a2e;
+}

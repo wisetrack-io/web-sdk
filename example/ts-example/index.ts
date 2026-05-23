@@ -5,7 +5,7 @@ import {
   WTInitialConfig,
   WTLogger,
   WTLogLevel,
-} from "wisetrack";
+} from "wisetrack"; // "../../dist/";
 
 const logLevelField = document.getElementById("log-level") as HTMLSelectElement;
 const appTokenField = document.getElementById("app-token") as HTMLInputElement;
@@ -52,6 +52,8 @@ initBtn.addEventListener("click", async (e) => {
   });
 
   await WiseTrack.instance.init(initialConfig);
+
+  WiseTrack.instance.trackEvent(WTEvent.defaultEvent("test-event-1"));
 
   initBtn.hidden = true;
   stopBtn.hidden = false;

@@ -1,7 +1,7 @@
 {
   "scripts": {
-    "build": "tsc",
-    "start": "npm run build && vite"
+    "build": "vite build",
+    "dev": "npm run build && vite"
   },
   "dependencies": {
     "wisetrack": "file:../.."
